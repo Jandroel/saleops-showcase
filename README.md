@@ -1,139 +1,216 @@
-# SaleOps
+# SaleOps Showcase
 
-SaleOps es una plataforma ecommerce-first para negocios que necesitan vender online y operar sus procesos comerciales desde una misma base. Combina una tienda publica para clientes con un panel interno privado para gestionar productos, inventario, pedidos, ventas, clientes, reportes e insights internos con IA.
+SaleOps Showcase es el repositorio publico de presentacion para SaleOps, una plataforma ecommerce-first single-tenant para negocios. Esta demo publica combina landing comercial, tienda online simulada, flujo de compra mock, panel interno visual, reportes e IA interna simulada.
 
-El objetivo no es crear solo una tienda visualmente atractiva. SaleOps busca demostrar criterio de producto, arquitectura mantenible, UX operativa, seguridad, documentacion clara y una base adaptable para negocios reales.
+El repositorio no contiene backend real, base de datos real, autenticacion real, pagos reales, IA real ni logica sensible.
 
-## Problema que resuelve
+## Que problema muestra
 
-Muchos negocios pequenos y medianos venden por canales dispersos: redes sociales, mensajes, hojas de calculo, ventas presenciales y pagos manuales. Eso dificulta mantener stock confiable, atender pedidos, revisar ventas y tomar decisiones con datos.
-
-SaleOps centraliza el flujo principal:
-
-- publicar productos;
-- recibir pedidos online;
-- operar recojo en tienda o delivery local;
-- registrar pagos manuales o simulados;
-- administrar inventario;
-- consultar ventas y clientes;
-- generar reportes e insights internos.
+Muchos negocios venden por redes, mensajes y hojas de calculo, pero no tienen pedidos, inventario, ventas, clientes y reportes conectados. SaleOps presenta una base para unir tienda online y operacion interna sin convertir el MVP en marketplace ni ERP completo.
 
 ## Enfoque ecommerce-first
 
-La tienda online es el punto de entrada principal del producto. Desde ahi, el cliente puede navegar el catalogo, buscar productos, revisar detalles, agregar al carrito y completar un checkout simple. El panel interno existe para que el negocio pueda cumplir y controlar las operaciones que nacen desde esa tienda.
+La tienda online es el punto de entrada. Desde ahi se simula:
 
-Esto evita que SaleOps se convierta en un ERP generico. El MVP se concentra en vender, cobrar de forma manual o simulada, preparar pedidos, entregar y aprender de los datos de venta.
+- catalogo de productos;
+- detalle de producto;
+- carrito;
+- checkout;
+- recojo en tienda;
+- delivery local;
+- metodos de pago manuales o simulados;
+- confirmacion de pedido.
+
+El panel interno muestra como el negocio podria gestionar pedidos, stock, ventas, reportes e insights internos.
 
 ## Modelo single-tenant
 
-SaleOps sera single-tenant por instalacion:
+SaleOps esta pensado como una instalacion por negocio:
 
 - una tienda por despliegue;
-- una configuracion de negocio por instancia;
-- una base de datos por instalacion;
-- adaptaciones puntuales por cliente si el producto se usa comercialmente.
-
-No se implementara multiempresa en el MVP. Esa decision reduce complejidad inicial, mejora la claridad del dominio y permite construir una base solida antes de pensar en tenancy compartida.
+- una configuracion por instancia;
+- adaptacion por cliente real;
+- sin multiempresa en el MVP.
 
 ## Repositorios planeados
 
-### saleops-showcase
+- `saleops-showcase`: publico. Landing, demo visual, flujo simulado, docs publicas y presentacion tecnica.
+- `saleops-frontend`: privado. Frontend real de tienda online y panel administrativo.
+- `saleops-backend`: privado. API real, base de datos, autenticacion, roles, logica de negocio, reportes, IA interna, seguridad y tests.
 
-Repositorio publico para landing, demo visual, flujo simulado de compra, documentacion publica y presentacion tecnica. No debe contener backend real, base de datos real, secretos ni logica sensible.
+## Que contiene este showcase
 
-### saleops-frontend
+- Landing comercial de SaleOps.
+- Demo de tienda para `NovaTech Store`.
+- Catalogo con productos mock.
+- Detalle visual de producto.
+- Carrito con `localStorage`.
+- Checkout simulado.
+- Confirmacion de pedido con codigo mock.
+- Panel interno simulado.
+- Productos, pedidos, reportes e IA interna mock.
+- Modo claro y oscuro.
+- Build estatico para despliegue sin backend.
 
-Repositorio privado para el frontend real de la tienda online y el panel administrativo. Debe contener la experiencia de cliente y las interfaces operativas internas.
+## Que no contiene
 
-### saleops-backend
+- Backend real.
+- Base de datos.
+- Login real.
+- Pasarela de pagos.
+- IA real.
+- Secretos o variables sensibles.
+- Integraciones externas.
+- Frontend privado completo.
 
-Repositorio privado para API real, base de datos, autenticacion, roles, logica de negocio, reportes, IA interna, seguridad, tests y documentacion tecnica.
+## Stack de este repositorio
 
-## MVP
+El showcase de Fase 1 esta implementado como sitio estatico sin dependencias para poder correr en este entorno aunque no exista `npm`, `pnpm` o `yarn` disponible.
 
-El MVP incluye:
+Incluye:
 
-- home de tienda;
-- catalogo, categorias, busqueda y detalle de producto;
-- carrito y checkout;
-- compra como Cliente invitado;
-- cuenta de Cliente registrado;
-- recojo en tienda y delivery local basico;
-- pagos manuales o simulados;
-- confirmacion y consulta basica de pedido;
-- panel interno con productos, categorias, inventario, pedidos, clientes, ventas, reportes basicos, configuracion e IA interna.
+- HTML estatico.
+- CSS modular en `public/assets/styles.css`.
+- JavaScript de demo en `public/assets/app.js`.
+- Datos mock en `public/assets/mock-data.js`.
+- Scripts Node para servidor local y build estatico.
 
-Queda fuera del MVP:
+La version real de SaleOps mantiene el stack propuesto en la documentacion:
 
-- marketplace;
-- multiempresa;
-- pasarela real de pagos;
-- tracking con mapa;
-- gestion en tiempo real de repartidores;
-- facturacion electronica;
-- ERP avanzado;
-- chatbot publico para clientes;
-- reviews, puntos, cupones avanzados e integracion real con WhatsApp API.
+- Next.js con App Router.
+- React.
+- TypeScript.
+- Tailwind CSS.
+- NestJS.
+- PostgreSQL.
+- Prisma.
+- Docker.
+- Swagger/OpenAPI.
+- IA interna.
 
-## Stack tecnologico propuesto
+## Requisitos
 
-Frontend:
+- Node.js disponible.
 
-- Next.js estable con App Router;
-- React;
-- TypeScript;
-- Tailwind CSS;
-- shadcn/ui;
-- TanStack Query;
-- React Hook Form;
-- Zod;
-- Recharts;
-- Playwright.
+No hay dependencias npm que instalar para esta fase.
 
-Backend:
+## Como correr localmente
 
-- NestJS;
-- TypeScript;
-- PostgreSQL;
-- Prisma;
-- JWT con refresh tokens;
-- RBAC;
-- Swagger/OpenAPI;
-- Docker;
-- Jest;
-- validacion de DTOs;
-- logging;
-- rate limiting basico.
+Con Node directo:
+
+```bash
+node scripts/serve.mjs
+```
+
+Luego abrir:
+
+```text
+http://localhost:4173
+```
+
+Si tienes npm disponible:
+
+```bash
+npm run dev
+```
+
+## Como construir
+
+Con Node directo:
+
+```bash
+node scripts/build.mjs
+```
+
+Si tienes npm disponible:
+
+```bash
+npm run build
+```
+
+El build genera la carpeta:
+
+```text
+out/
+```
+
+## Como desplegar
+
+El showcase no necesita backend. Puede desplegarse como sitio estatico en:
+
+- Vercel;
+- Cloudflare Pages;
+- Netlify;
+- GitHub Pages.
+
+Comando de build:
+
+```bash
+node scripts/build.mjs
+```
+
+Directorio de salida:
+
+```text
+out
+```
+
+## Rutas principales
+
+- `/`: landing comercial.
+- `/demo/store/`: home de tienda demo.
+- `/demo/store/products/`: catalogo.
+- `/demo/store/products/monitor-ultraview-27/`: detalle visual de producto.
+- `/demo/store/cart/`: carrito.
+- `/demo/store/checkout/`: checkout simulado.
+- `/demo/store/order-success/`: confirmacion simulada.
+- `/demo/admin/`: dashboard interno.
+- `/demo/admin/products/`: gestion visual de productos.
+- `/demo/admin/orders/`: gestion visual de pedidos.
+- `/demo/admin/reports/`: reportes mock.
+- `/demo/admin/ai-insights/`: IA interna simulada.
+- `/docs/`: resumen tecnico publico.
+- `/roadmap/`: roadmap visual.
+
+## Capturas
+
+Seccion preparada para capturas:
+
+- Landing.
+- Tienda demo.
+- Checkout simulado.
+- Dashboard interno.
+- IA interna simulada.
+
+## Estructura del proyecto
+
+```text
+.
+├── docs/
+│   ├── adr/
+│   ├── showcase.md
+│   ├── deployment-showcase.md
+│   └── mock-data.md
+├── public/
+│   └── assets/
+│       ├── app.js
+│       ├── mock-data.js
+│       ├── saleops-hero-dashboard.png
+│       └── styles.css
+├── scripts/
+│   ├── build.mjs
+│   └── serve.mjs
+├── index.html
+├── package.json
+└── README.md
+```
 
 ## Estado actual
 
-El proyecto esta en Fase 0: documentacion y decisiones base. En esta fase no se implementan pantallas, endpoints, modelos Prisma ni logica de aplicacion. La meta es dejar una columna vertebral tecnica y de producto antes de programar.
+Fase 1 en progreso/completada: showcase publico estatico con datos simulados.
 
-## Fases de trabajo
+Fase recomendada siguiente: Fase 2, base del frontend real privado.
 
-1. Fase 0: documentacion y decisiones base.
-2. Fase 1: showcase publico inicial.
-3. Fase 2: frontend real base.
-4. Fase 3: backend real base.
-5. Fase 4: catalogo, productos e inventario.
-6. Fase 5: carrito, checkout y pedidos.
-7. Fase 6: panel interno operativo.
-8. Fase 7: reportes e IA interna.
-9. Fase 8: calidad profesional, tests, CI, documentacion y despliegue.
+## Nota de portafolio
 
-## Uso como portafolio y base comercial
-
-SaleOps debe funcionar como proyecto de portafolio tecnico y como base adaptable para clientes reales. El showcase publico demostrara vision, experiencia y arquitectura sin exponer codigo sensible. Los repositorios privados contendran la implementacion real reutilizable para instalaciones especificas.
-
-## Recommended Improvements
-
-- Mantener decisiones relevantes como ADRs desde el inicio.
-- Documentar flujos de pedido, pago e inventario antes de modelar la base de datos.
-- Definir criterios de seguridad y privacidad antes de exponer endpoints reales.
-- Preparar contratos API de alto nivel antes de acoplar frontend y backend.
-
-## Open Questions
-
-- Que tipo de negocio sera el primer caso de referencia para adaptar la UX y los datos de ejemplo?
-- El primer despliegue real usara dominio propio, subdominio o entorno local de demostracion?
-- Que proveedor de hosting se priorizara para frontend, backend y base de datos?
+Este repositorio sirve como vitrina publica de producto y arquitectura. La implementacion real debe permanecer separada en repositorios privados para proteger logica sensible, datos, integraciones y decisiones comerciales.

@@ -15,6 +15,7 @@ coverage/
 # Local prompt and planning files
 PromptInicial.txt
 fase*.txt
+3.1.txt
 prompts/
 *.local.txt
 

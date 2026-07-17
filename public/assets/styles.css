@@ -98,15 +98,11 @@ select {
   font-weight: 780;
 }
 
-.brand-mark {
-  display: grid;
+.brand-logo {
+  display: block;
   width: 34px;
   height: 34px;
-  place-items: center;
   border-radius: 8px;
-  background: var(--primary);
-  color: white;
-  font-size: 0.92rem;
 }
 
 .nav-links,
@@ -207,15 +203,14 @@ select {
   display: flex;
   min-height: min(760px, calc(100vh - 18px));
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(248, 250, 252, 0.84) 38%, rgba(248, 250, 252, 0.18) 78%),
-    url("/assets/saleops-hero-dashboard.png") center right / cover no-repeat;
+  background: #111827 url("/assets/screenshots/dashboard-desktop.webp") center / cover no-repeat;
 }
 
-[data-theme="dark"] .hero {
-  background:
-    linear-gradient(90deg, rgba(16, 20, 24, 0.98), rgba(16, 20, 24, 0.82) 42%, rgba(16, 20, 24, 0.18) 80%),
-    url("/assets/saleops-hero-dashboard.png") center right / cover no-repeat;
+.hero::before {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 24, 0.78);
+  content: "";
 }
 
 .hero-inner,
@@ -225,6 +220,8 @@ select {
 }
 
 .hero-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   padding: 82px 0 118px;
@@ -232,6 +229,7 @@ select {
 
 .hero-copy {
   max-width: 690px;
+  color: #f8fafc;
 }
 
 .eyebrow {
@@ -243,6 +241,10 @@ select {
   font-size: 0.85rem;
   font-weight: 780;
   text-transform: uppercase;
+}
+
+.hero .eyebrow {
+  color: #a7f3d0;
 }
 
 [data-theme="dark"] .eyebrow {
@@ -272,10 +274,20 @@ h1 {
   line-height: 1.55;
 }
 
+.hero .hero-lead {
+  color: #e5e7eb;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.btn.hero-secondary {
+  border-color: rgba(255, 255, 255, 0.56);
+  background: rgba(17, 24, 39, 0.62);
+  color: #ffffff;
 }
 
 .hero-stats {
@@ -287,9 +299,9 @@ h1 {
 }
 
 .stat-pill {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  background: rgba(17, 24, 39, 0.72);
   padding: 14px;
 }
 
@@ -300,7 +312,7 @@ h1 {
 }
 
 .stat-pill span {
-  color: var(--muted);
+  color: #d1d5db;
   font-size: 0.88rem;
 }
 
@@ -410,6 +422,82 @@ h1 {
   display: flex;
   gap: 16px;
   align-items: flex-start;
+}
+
+.repo-card:hover {
+  border-color: var(--primary);
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary-strong);
+  font-size: 0.88rem;
+  font-weight: 760;
+}
+
+.status-card h3 {
+  margin-top: 18px;
+}
+
+.shot-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 18px;
+}
+
+.product-shot {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.product-shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+}
+
+.product-shot figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 15px 17px;
+}
+
+.product-shot figcaption span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.shot-wide {
+  grid-row: span 2;
+}
+
+.shot-wide img {
+  height: calc(100% - 76px);
+  min-height: 440px;
+  aspect-ratio: auto;
+}
+
+.shot-mobile {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.6fr) minmax(0, 1fr);
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
+.shot-mobile img {
+  max-height: 560px;
+  aspect-ratio: 390 / 844;
+  object-fit: contain;
+  background: var(--surface-2);
 }
 
 .repo-index {
@@ -812,6 +900,12 @@ h1 {
   gap: 16px;
 }
 
+.dashboard-grid > *,
+.admin-layout > *,
+.grid > * {
+  min-width: 0;
+}
+
 .chart {
   width: 100%;
   height: 260px;
@@ -823,6 +917,7 @@ h1 {
 
 table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
 }
 
@@ -875,7 +970,7 @@ td {
   padding: 16px;
 }
 
-.phase {
+.state-label {
   color: var(--primary-strong);
   font-weight: 800;
 }
@@ -989,6 +1084,7 @@ td {
   }
 
   .hero-stats,
+  .shot-grid,
   .grid.three,
   .grid.four,
   .product-grid,
@@ -999,6 +1095,16 @@ td {
   .checkout-layout,
   .admin-layout {
     grid-template-columns: 1fr;
+  }
+
+  .shot-wide {
+    grid-row: auto;
+  }
+
+  .shot-wide img {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .sidebar {
@@ -1020,7 +1126,12 @@ td {
   }
 
   .hero {
-    min-height: 760px;
+    min-height: calc(100vh - 108px);
+    min-height: calc(100svh - 108px);
+  }
+
+  .hero-inner {
+    padding: 36px 0 44px;
   }
 
   h1 {
@@ -1033,6 +1144,32 @@ td {
   .spec-list,
   .sidebar {
     grid-template-columns: 1fr;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .stat-pill {
+    min-width: 0;
+    min-height: 108px;
+    padding: 12px 8px;
+  }
+
+  .stat-pill span {
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  .shot-mobile {
+    display: block;
+  }
+
+  .shot-mobile img {
+    width: 100%;
+    max-height: 520px;
   }
 
   .section {

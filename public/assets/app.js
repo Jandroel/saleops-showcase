@@ -123,15 +123,15 @@
       <header class="site-header">
         <nav class="nav" aria-label="Principal">
           <a class="brand" href="/">
-            <span class="brand-mark">SO</span>
+            <img class="brand-logo" src="/assets/saleops-mark.svg" alt="" width="34" height="34" />
             <span>SaleOps</span>
           </a>
           <div class="nav-links">
-            <a class="nav-link${active("/")}" href="/">Inicio</a>
-            <a class="nav-link${active("/demo/store/")}" href="/demo/store/">Tienda demo</a>
-            <a class="nav-link${active("/demo/admin/")}" href="/demo/admin/">Panel interno</a>
-            <a class="nav-link${active("/docs/")}" href="/docs/">Docs</a>
-            <a class="nav-link${active("/roadmap/")}" href="/roadmap/">Roadmap</a>
+            <a class="nav-link${active("/")}" href="/">Producto</a>
+            <a class="nav-link" href="/#recorrido">Recorrido</a>
+            <a class="nav-link${active("/demo/store/")}" href="/demo/store/">Demo estática</a>
+            <a class="nav-link${active("/docs/")}" href="/docs/">Arquitectura</a>
+            <a class="nav-link${active("/roadmap/")}" href="/roadmap/">Estado</a>
           </div>
           <div class="nav-actions">
             <a class="btn ghost desktop-only" href="/demo/store/cart/" aria-label="Ver carrito">${icon("bag")}<span data-cart-count>${cartCount()}</span></a>
@@ -140,9 +140,9 @@
           </div>
         </nav>
         <div class="mobile-panel" data-mobile-panel>
-          <a class="nav-link" href="/demo/store/">Tienda demo</a>
-          <a class="nav-link" href="/demo/admin/">Panel interno</a>
-          <a class="nav-link" href="/docs/">Docs tecnicos</a>
+          <a class="nav-link" href="/#recorrido">Recorrido real</a>
+          <a class="nav-link" href="/demo/store/">Demo estática</a>
+          <a class="nav-link" href="/docs/">Arquitectura</a>
           <a class="nav-link" href="/demo/store/cart/">Carrito (${cartCount()})</a>
         </div>
       </header>
@@ -154,14 +154,14 @@
       <footer class="footer" id="footer">
         <div class="footer-inner">
           <div>
-            <a class="brand" href="/"><span class="brand-mark">SO</span><span>SaleOps</span></a>
-            <p style="max-width: 560px; margin: 14px 0 0;">Showcase publico con datos simulados para presentar una plataforma ecommerce-first single-tenant.</p>
+            <a class="brand" href="/"><img class="brand-logo" src="/assets/saleops-mark.svg" alt="" width="34" height="34" /><span>SaleOps</span></a>
+            <p style="max-width: 560px; margin: 14px 0 0;">Tienda online y operación comercial conectadas. El producto funciona completamente sin IA.</p>
           </div>
           <div class="stack-grid" aria-label="Enlaces">
             <a class="stack-pill" href="/docs/">Docs</a>
-            <a class="stack-pill" href="/roadmap/">Roadmap</a>
-            <a class="stack-pill" href="/demo/store/">Demo tienda</a>
-            <a class="stack-pill" href="/demo/admin/">Demo panel</a>
+            <a class="stack-pill" href="/roadmap/">Estado</a>
+            <a class="stack-pill" href="https://github.com/Jandroel/saleops-frontend" rel="noreferrer" target="_blank">Frontend</a>
+            <a class="stack-pill" href="https://github.com/Jandroel/saleops-backend" rel="noreferrer" target="_blank">Backend</a>
           </div>
         </div>
       </footer>
@@ -253,7 +253,7 @@
       })
       .join("");
     return `
-      <svg class="chart" viewBox="0 0 560 270" role="img" aria-label="Grafico mock de ventas">
+      <svg class="chart" viewBox="0 0 560 270" role="img" aria-label="Gráfico de ventas de ejemplo">
         <line x1="20" y1="226" x2="540" y2="226" stroke="var(--line)" />
         ${bars}
         <polyline points="${points}" fill="none" stroke="var(--primary)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -263,38 +263,39 @@
 
   function landingPage() {
     const modules = [
-      ["Tienda online", "Home, catalogo, busqueda, detalle, carrito y checkout simulado.", "store"],
-      ["Pedidos", "Estados operativos desde Pending hasta Completed.", "truck"],
-      ["Inventario", "Stock visible, bajo stock, agotados y movimientos conceptuales.", "boxes"],
-      ["Ventas", "Lectura de ingresos simulados y ventas presenciales futuras.", "chart"],
-      ["Clientes", "Cliente registrado e invitado separados del usuario interno.", "users"],
-      ["Reportes", "Metricas, productos destacados y resumen de pedidos.", "dashboard"],
-      ["IA interna", "Insights simulados solo para Admin y Vendedor.", "spark"],
-      ["Seguridad", "RBAC, auditoria, rate limiting y privacidad documentados.", "shield"]
+      ["Tienda online", "Catálogo, búsqueda, detalle, carrito y checkout validados por la API.", "store"],
+      ["Pedidos", "Compra invitada o autenticada, reservas y transiciones operativas.", "truck"],
+      ["Inventario", "Stock, bajo stock, movimientos y ajustes transaccionales.", "boxes"],
+      ["Ventas y POS", "Venta presencial, conversión de pedidos, comprobante y anulaciones.", "chart"],
+      ["Clientes", "Cuenta, perfil, direcciones e historial separados del usuario interno.", "users"],
+      ["Caja", "Apertura, movimientos, cierre e historial consistentes.", "dashboard"],
+      ["Reportes", "Indicadores, comparativas y CSV deterministas sin depender de IA.", "chart"],
+      ["Seguridad", "Sesiones separadas, RBAC, auditoría y validación estricta.", "shield"]
     ];
     const repos = [
-      ["saleops-showcase", "Publico", "Landing, demo visual, flujo simulado y documentacion publica."],
-      ["saleops-frontend", "Privado", "Tienda real y panel administrativo para cada instalacion."],
-      ["saleops-backend", "Privado", "API, PostgreSQL, auth, RBAC, reportes, IA interna y tests."]
+      ["saleops-showcase", "Vitrina estática", "Presentación, capturas y demo local sin datos sensibles.", "https://github.com/Jandroel/saleops-showcase"],
+      ["saleops-frontend", "Aplicación real", "Tienda, cuenta de cliente y panel administrativo.", "https://github.com/Jandroel/saleops-frontend"],
+      ["saleops-backend", "Fuente de verdad", "API, PostgreSQL, autenticación y reglas comerciales.", "https://github.com/Jandroel/saleops-backend"],
+      ["saleops-docs", "Decisiones", "Arquitectura, contratos, ADR y continuidad técnica.", "https://github.com/Jandroel/saleops-docs"]
     ];
-    const stack = ["Next.js", "React", "TypeScript", "Tailwind CSS", "NestJS", "PostgreSQL", "Prisma", "Docker", "Swagger/OpenAPI", "IA interna"];
+    const stack = ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "TanStack Query", "NestJS 11", "PostgreSQL 16", "Prisma 6", "Playwright", "GitHub Actions"];
 
     return pageShell(`
       <main>
         <section class="hero">
           <div class="hero-inner">
             <div class="hero-copy">
-              <p class="eyebrow">${icon("spark")} Ecommerce-first single-tenant</p>
+              <p class="eyebrow">${icon("store")} Ecommerce-first · single-tenant</p>
               <h1>SaleOps</h1>
-              <p class="hero-lead">Vende online y gestiona tu operacion desde un solo lugar. SaleOps combina tienda online, pedidos, inventario, ventas, clientes, reportes e insights internos para negocios que quieren vender mejor.</p>
+              <p class="hero-lead">Tienda online, pedidos, inventario, ventas, clientes, caja y reportes conectados en una operación consistente.</p>
               <div class="hero-actions">
-                <a class="btn primary" href="/demo/store/">${icon("store")} Ver demo</a>
-                <a class="btn ghost" href="/docs/">${icon("docs")} Ver documentacion</a>
+                <a class="btn primary" href="#recorrido">${icon("arrow")} Ver producto real</a>
+                <a class="btn hero-secondary" href="https://github.com/Jandroel/saleops-frontend" rel="noreferrer" target="_blank">${icon("docs")} Abrir repositorio</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-pill"><strong>12</strong><span>productos mock visibles</span></div>
-                <div class="stat-pill"><strong>5</strong><span>estados de pedido en demo</span></div>
-                <div class="stat-pill"><strong>0</strong><span>servicios externos sensibles</span></div>
+                <div class="stat-pill"><strong>41</strong><span>rutas de aplicación</span></div>
+                <div class="stat-pill"><strong>108</strong><span>operaciones API inventariadas</span></div>
+                <div class="stat-pill"><strong>0</strong><span>flujos que dependen de IA</span></div>
               </div>
             </div>
           </div>
@@ -302,66 +303,70 @@
 
         <section class="section band-soft">
           <div class="section-inner">
-            ${sectionHeading("Problema y solucion", "De ventas dispersas a operacion conectada", "Muchos negocios venden por redes, mensajes y hojas de calculo. SaleOps muestra como una tienda online puede conectarse con pedidos, inventario, ventas y reportes sin convertirse en un ERP completo.")}
+            ${sectionHeading("Problema y solución", "De ventas dispersas a operación conectada", "SaleOps reúne el recorrido de compra y el trabajo interno del negocio sin convertirse en marketplace ni ERP generalista.")}
             <div class="grid two">
-              ${moduleCard("Antes", "Catalogos manuales, pagos por coordinar, stock incierto y poco contexto para decidir reposicion.", "search")}
-              ${moduleCard("Con SaleOps", "Una experiencia ecommerce-first con backoffice operativo, estados claros e insights internos simulados.", "check")}
+              ${moduleCard("Experiencia comercial", "Catálogo publicable, compra invitada o autenticada, pedidos consultables y datos de cliente protegidos.", "store")}
+              ${moduleCard("Operación interna", "Stock, pedidos, POS, ventas, caja y reportes comparten reglas y una única fuente de verdad.", "check")}
             </div>
           </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="recorrido">
           <div class="section-inner">
-            ${sectionHeading("Modulos", "La columna vertebral del producto", "El showcase presenta los modulos del MVP con datos simulados y sin backend real.")}
+            ${sectionHeading("Recorrido real", "La aplicación que ya funciona", "Capturas tomadas de SaleOps conectado a PostgreSQL con datos locales controlados. No contienen credenciales ni información personal real.")}
+            <div class="shot-grid">
+              <figure class="product-shot shot-wide"><img src="/assets/screenshots/storefront-desktop.webp" alt="Tienda real de SaleOps con catálogo y productos destacados" loading="eager" /><figcaption><strong>Tienda online</strong><span>Catálogo, media real y disponibilidad actualizada.</span></figcaption></figure>
+              <figure class="product-shot"><img src="/assets/screenshots/dashboard-desktop.webp" alt="Dashboard operativo real de SaleOps" loading="lazy" /><figcaption><strong>Dashboard</strong><span>Resumen comparado y ventas recientes.</span></figcaption></figure>
+              <figure class="product-shot"><img src="/assets/screenshots/reports-desktop.webp" alt="Reportes operativos reales de SaleOps" loading="lazy" /><figcaption><strong>Reportes</strong><span>Filtros, comparativas, tablas y exportación.</span></figcaption></figure>
+              <figure class="product-shot"><img src="/assets/screenshots/pos-desktop.webp" alt="Punto de venta real de SaleOps" loading="lazy" /><figcaption><strong>Punto de venta</strong><span>Productos, cliente, pago, stock y caja.</span></figcaption></figure>
+              <figure class="product-shot shot-mobile"><img src="/assets/screenshots/storefront-mobile.webp" alt="Tienda SaleOps en un viewport móvil" loading="lazy" /><figcaption><strong>Experiencia móvil</strong><span>Navegación y compra adaptadas.</span></figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="section band">
+          <div class="section-inner">
+            ${sectionHeading("Capacidades", "La columna vertebral del producto", "Estos módulos consumen la API real y PostgreSQL; la demo estática es solo una representación pública separada.")}
             <div class="grid four">${modules.map((item) => moduleCard(item[0], item[1], item[2])).join("")}</div>
           </div>
         </section>
 
-        <section class="section band">
-          <div class="section-inner">
-            ${sectionHeading("NovaTech Store", "Demo visual de tienda", "La tienda mock usa productos de tecnologia, accesorios, perifericos y home office.", `<a class="btn primary" href="/demo/store/products/">${icon("arrow")} Abrir catalogo</a>`)}
-            ${productGrid(data.products.slice(0, 4))}
-          </div>
-        </section>
-
         <section class="section">
           <div class="section-inner">
-            ${sectionHeading("Backoffice", "Panel interno simulado", "Metricas, pedidos recientes, alertas de stock, grafico mock e IA interna simulada para usuarios internos.", `<a class="btn ghost" href="/demo/admin/">${icon("dashboard")} Ver panel</a>`)}
-            <div class="metric-grid">${data.metrics.map(metricCard).join("")}</div>
-            <div style="height:16px"></div>
-            <div class="dashboard-grid">
-              <div class="card"><h3>Ventas mock por dia</h3>${salesChart()}</div>
-              <div class="card"><h3>IA interna simulada</h3><p>${data.aiInsights[0]}</p><p>${data.aiInsights[3]}</p></div>
+            ${sectionHeading("Estados claros", "Real, opcional y futuro no se mezclan", "La comunicación del producto distingue lo operativo de los experimentos y del trabajo que aún no existe.")}
+            <div class="grid three">
+              <article class="card status-card"><span class="badge success">Disponible</span><h3>Núcleo comercial</h3><p>Tienda, clientes, catálogo, pedidos, inventario, ventas, POS, caja, dashboard y reportes.</p></article>
+              <article class="card status-card"><span class="badge info">Opcional</span><h3>Laboratorio de IA</h3><p>Vista conceptual aislada. SaleOps y sus reportes funcionan completamente sin IA.</p></article>
+              <article class="card status-card"><span class="badge warning">Futuro</span><h3>Integraciones comerciales</h3><p>Pagos reales, promociones, OAuth y automatización requieren decisiones y proveedores propios.</p></article>
             </div>
           </div>
         </section>
 
         <section class="section band-soft">
           <div class="section-inner">
-            ${sectionHeading("Arquitectura", "Tres repositorios con responsabilidades claras", "El showcase publico cuenta la historia del producto sin exponer implementacion privada ni logica sensible.")}
-            <div class="grid three">
-              ${repos.map((repo, index) => `<article class="card repo-card"><span class="repo-index">0${index + 1}</span><div><h3>${repo[0]}</h3><p><strong>${repo[1]}.</strong> ${repo[2]}</p></div></article>`).join("")}
-            </div>
+            ${sectionHeading("Demo pública", "Explora una representación estática", "Permite recorrer tienda y panel sin backend, credenciales ni datos sensibles. No sustituye a la aplicación real.", `<a class="btn primary" href="/demo/store/">${icon("store")} Abrir demo estática</a>`)}
           </div>
         </section>
 
         <section class="section">
           <div class="section-inner">
-            ${sectionHeading("Stack", "Base tecnica propuesta", "El showcase es estatico para publicarse sin backend. La version real mantiene la arquitectura documentada en Fase 0.")}
-            <div class="stack-grid">${stack.map((item) => `<span class="stack-pill">${item}</span>`).join("")}</div>
+            ${sectionHeading("Arquitectura", "Cuatro repositorios con responsabilidades claras", "La aplicación, la API, la documentación y la vitrina evolucionan por separado y se validan con CI.")}
+            <div class="grid two">
+              ${repos.map((repo, index) => `<a class="card repo-card" href="${repo[3]}" rel="noreferrer" target="_blank"><span class="repo-index">0${index + 1}</span><div><h3>${repo[0]}</h3><p><strong>${repo[1]}.</strong> ${repo[2]}</p><span class="repo-link">Abrir en GitHub ${icon("arrow")}</span></div></a>`).join("")}
+            </div>
           </div>
         </section>
 
         <section class="section band">
           <div class="section-inner">
-            ${sectionHeading("Roadmap", "MVP enfocado, futuro ordenado", "SaleOps avanza desde showcase publico hacia frontend real, backend, catalogo, checkout, panel interno, reportes e IA.")}
-            ${roadmapList(true)}
+            ${sectionHeading("Stack", "Base técnica actual", "Tecnologías verificadas en los repositorios reales y sus pipelines.")}
+            <div class="stack-grid">${stack.map((item) => `<span class="stack-pill">${item}</span>`).join("")}</div>
           </div>
         </section>
 
         <section class="section">
           <div class="section-inner">
-            <div class="disclaimer"><strong>Demo publica.</strong> Esta demo usa datos simulados y no contiene backend real ni logica sensible. La version completa de SaleOps esta disenada para implementaciones privadas por negocio.</div>
+            <div class="disclaimer"><strong>Límite de la vitrina.</strong> Las rutas bajo <code>/demo</code> usan datos locales simulados y no contienen autenticación, base de datos ni lógica sensible. Las capturas y capacidades descritas corresponden a la aplicación real separada.</div>
           </div>
         </section>
       </main>
@@ -386,7 +391,7 @@
             <div>
               <p class="eyebrow">${icon("store")} NovaTech Store</p>
               <h2 style="font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: .94; margin-bottom: 18px;">Tecnologia para trabajar mejor</h2>
-              <p class="hero-lead">Explora una tienda demo con productos mock, categorias, bajo stock, agotados, carrito y checkout simulado.</p>
+              <p class="hero-lead">Explora una representación estática de la tienda con productos locales, categorías, carrito y checkout de prueba.</p>
               <div class="hero-actions">
                 <a class="btn primary" href="/demo/store/products/">${icon("package")} Ver productos</a>
                 <a class="btn ghost" href="/demo/store/cart/">${icon("bag")} Carrito (${cartCount()})</a>
@@ -411,7 +416,7 @@
     return pageShell(`
       <main class="section">
         <div class="section-inner">
-          ${sectionHeading("Catalogo", "Productos mock de NovaTech Store", "Filtra categorias, abre detalles y agrega productos disponibles al carrito simulado.")}
+          ${sectionHeading("Catálogo", "Productos de ejemplo de NovaTech Store", "Filtra categorías, abre detalles y agrega productos al carrito local de la vitrina.")}
           <div class="filters" data-filters>
             <button class="filter-btn active" data-filter="Todos">Todos</button>
             ${data.categories.map((category) => `<button class="filter-btn" data-filter="${category}">${category}</button>`).join("")}
@@ -454,7 +459,7 @@
       return pageShell(`
         <main class="section">
           <div class="section-inner">
-            ${sectionHeading("Carrito", "Tu carrito simulado esta vacio", "Agrega productos desde el catalogo para continuar al checkout mock.")}
+            ${sectionHeading("Carrito local", "Tu carrito está vacío", "Agrega productos de ejemplo para continuar al checkout estático.")}
             <div class="empty-state"><div><p>No hay productos seleccionados.</p><a class="btn primary" href="/demo/store/products/">${icon("package")} Ir al catalogo</a></div></div>
           </div>
         </main>
@@ -513,7 +518,7 @@
       <main class="section">
         <div class="section-inner checkout-layout">
           <form class="checkout-panel" data-checkout-form>
-            <p class="eyebrow">${icon("shield")} Checkout simulado</p>
+            <p class="eyebrow">${icon("shield")} Checkout de la demo estática</p>
             <h2>Confirmar pedido</h2>
             <p style="color: var(--muted);">No guarda datos reales ni conecta pasarelas. Todo queda en estado local del navegador.</p>
             <div class="form-grid">
@@ -533,7 +538,7 @@
               ${option("payment", "transfer", "Transferencia bancaria", "Sin integracion bancaria real.")}
               ${option("payment", "card", "Tarjeta simulada", "Solo para demo visual.")}
             </div>
-            <button class="btn primary" style="width:100%; margin-top: 18px;" type="submit">${icon("check")} Confirmar pedido simulado</button>
+            <button class="btn primary" style="width:100%; margin-top: 18px;" type="submit">${icon("check")} Confirmar pedido de ejemplo</button>
           </form>
           <aside class="checkout-panel">
             <h3>Resumen</h3>
@@ -565,7 +570,7 @@
             <div>
               <p class="eyebrow">${icon("check")} Pedido confirmado</p>
               <h2 style="font-size: clamp(2.3rem, 6vw, 4.4rem);">${code}</h2>
-              <p>Pedido simulado creado con datos locales. Estado inicial: Pending.</p>
+              <p>Pedido de ejemplo creado localmente. Esta acción no consulta la API real.</p>
               <div class="hero-actions" style="justify-content:center;">
                 <a class="btn primary" href="/demo/admin/orders/">${icon("dashboard")} Ver en panel</a>
                 <a class="btn ghost" href="/demo/store/products/">${icon("package")} Seguir comprando</a>
@@ -588,7 +593,7 @@
     return pageShell(`
       <main class="section">
         <div class="section-inner">
-          ${sectionHeading("Panel interno simulado", title, "Vista publica con datos mock. No hay login real, backend, base de datos ni IA real.")}
+          ${sectionHeading("Demo estática de panel", title, "Representación pública con datos locales. La aplicación real, la API y PostgreSQL viven en repositorios separados.")}
           <div class="admin-layout">
             <aside class="sidebar">${links.map(([href, label, iconName]) => `<a class="sidebar-link${active(href)}" href="${href}">${icon(iconName)} ${label}</a>`).join("")}</aside>
             <div>${content}</div>
@@ -603,7 +608,7 @@
       <div class="metric-grid">${data.metrics.map(metricCard).join("")}</div>
       <div style="height:16px"></div>
       <div class="dashboard-grid">
-        <section class="card"><h3>Ventas mock por dia</h3>${salesChart()}</section>
+        <section class="card"><h3>Ventas de ejemplo por día</h3>${salesChart()}</section>
         <section class="card"><h3>Alertas de stock</h3>${lowStockList()}</section>
       </div>
       <div style="height:16px"></div>
@@ -653,8 +658,8 @@
   function reportsPage() {
     return adminShell(`
       <div class="dashboard-grid">
-        <section class="card"><h3>Ventas simuladas</h3>${salesChart()}</section>
-        <section class="card"><h3>Resumen</h3><p>Ingresos simulados del mes: <strong>S/ 48,920</strong></p><p>Productos mas vendidos: Monitor UltraView 27, Teclado ProLine MX y Dock USB-C 12 en 1.</p><p>Pedidos con recojo en tienda: <strong>58%</strong>.</p></section>
+        <section class="card"><h3>Ventas de ejemplo</h3>${salesChart()}</section>
+        <section class="card"><h3>Resumen estático</h3><p>Ingresos del conjunto local: <strong>S/ 48,920</strong></p><p>Esta vista no consulta la API real. Sirve para recorrer la presentación pública sin credenciales.</p><p>Los reportes reales incluyen periodos, comparación, filtros, tablas y CSV.</p></section>
       </div>
       <div style="height:16px"></div>
       <div class="grid three">
@@ -662,15 +667,16 @@
         ${moduleCard("Poca rotacion", "2 productos agotados y 3 con movimiento bajo en esta demo.", "chart")}
         ${moduleCard("Delivery local", "Flujo manual sin mapa ni repartidores en tiempo real.", "truck")}
       </div>
-    `, "Reportes visuales");
+    `, "Representación de reportes");
   }
 
   function aiPage() {
     return adminShell(`
       <section class="ai-thread">
-        ${data.aiInsights.map((insight, index) => `<article class="ai-message"><span class="badge info">Insight mock ${index + 1}</span><p style="margin-top:12px;">${insight}</p><small style="color:var(--muted);">Fuente simulada: ventas, pedidos e inventario de NovaTech Store.</small></article>`).join("")}
+        <div class="disclaimer"><strong>Capacidad opcional.</strong> SaleOps funciona completamente sin IA. Esta ruta solo conserva una representación visual aislada.</div>
+        ${data.aiInsights.map((insight, index) => `<article class="ai-message"><span class="badge info">Escenario conceptual ${index + 1}</span><p style="margin-top:12px;">${insight}</p><small style="color:var(--muted);">Datos locales de demostración; no usa proveedor ni modifica la operación.</small></article>`).join("")}
       </section>
-    `, "IA interna simulada");
+    `, "Laboratorio opcional de IA");
   }
 
   function docsPage() {
@@ -687,10 +693,17 @@
     return pageShell(`
       <main class="section">
         <div class="section-inner">
-          ${sectionHeading("Documentacion publica", "Resumen tecnico del showcase", "Esta ruta sintetiza la Fase 0 y explica que este repositorio no contiene frontend real completo ni backend real.")}
+          ${sectionHeading("Arquitectura pública", "Cómo está construido SaleOps", "La vitrina es estática; la aplicación real, la API y las decisiones técnicas evolucionan en repositorios separados.")}
           <div class="grid two">
-            ${moduleCard("Showcase publico", "Landing, tienda demo, panel admin simulado, reportes visuales, IA mock y documentacion publica.", "store")}
-            ${moduleCard("Version privada", "El frontend y backend reales viviran en repositorios privados por seguridad, integraciones y datos sensibles.", "shield")}
+            ${moduleCard("Aplicación real", "Next.js reúne tienda, cuenta de cliente y panel interno conectado a la API.", "store")}
+            ${moduleCard("Backend real", "NestJS y PostgreSQL son autoridad de identidad, precio, stock, pedidos, ventas, caja y reportes.", "shield")}
+          </div>
+          <div style="height:16px"></div>
+          <div class="grid two">
+            <a class="card repo-card" href="https://github.com/Jandroel/saleops-frontend" rel="noreferrer" target="_blank"><div><h3>saleops-frontend</h3><p>Tienda, cuenta y administración.</p><span class="repo-link">Abrir repositorio ${icon("arrow")}</span></div></a>
+            <a class="card repo-card" href="https://github.com/Jandroel/saleops-backend" rel="noreferrer" target="_blank"><div><h3>saleops-backend</h3><p>API, base de datos y reglas comerciales.</p><span class="repo-link">Abrir repositorio ${icon("arrow")}</span></div></a>
+            <a class="card repo-card" href="https://github.com/Jandroel/saleops-docs" rel="noreferrer" target="_blank"><div><h3>saleops-docs</h3><p>ADR, contratos y estado consolidado.</p><span class="repo-link">Abrir repositorio ${icon("arrow")}</span></div></a>
+            <a class="card repo-card" href="https://github.com/Jandroel/saleops-showcase" rel="noreferrer" target="_blank"><div><h3>saleops-showcase</h3><p>Vitrina y demo estática sin secretos.</p><span class="repo-link">Abrir repositorio ${icon("arrow")}</span></div></a>
           </div>
           <div style="height:16px"></div>
           <div class="table-wrap"><table><thead><tr><th>Documento</th><th>Archivo</th></tr></thead><tbody>${docs.map((doc) => `<tr><td>${doc[0]}</td><td>${doc[1]}</td></tr>`).join("")}</tbody></table></div>
@@ -700,26 +713,24 @@
   }
 
   function roadmapList(compact = false) {
-    const phases = [
-      ["Fase 0", "Documentacion y decisiones base."],
-      ["Fase 1", "Showcase publico inicial."],
-      ["Fase 2", "Frontend real base."],
-      ["Fase 3", "Backend real base."],
-      ["Fase 4", "Catalogo, productos e inventario."],
-      ["Fase 5", "Carrito, checkout y pedidos."],
-      ["Fase 6", "Panel interno operativo."],
-      ["Fase 7", "Reportes e IA interna."],
-      ["Fase 8", "Calidad, tests, CI y despliegue."]
+    const statuses = [
+      ["Disponible", "Tienda, catálogo, clientes, checkout y pedidos reales."],
+      ["Disponible", "Inventario, ventas, POS, caja y administración real."],
+      ["Disponible", "Dashboard, reportes, comparativas y exportación CSV."],
+      ["En curso", "Coherencia visual, accesibilidad, capturas y documentación viva."],
+      ["Siguiente", "Operación de piloto: sesiones seguras, observabilidad, backups y carga."],
+      ["Futuro", "Pagos reales y promociones según demanda comercial."],
+      ["Opcional", "IA desacoplada, evaluada solo con datos y objetivos gobernados."]
     ];
-    const list = compact ? phases.slice(0, 5) : phases;
-    return `<div class="roadmap">${list.map((phase) => `<article class="roadmap-item"><span class="phase">${phase[0]}</span><p>${phase[1]}</p></article>`).join("")}</div>`;
+    const list = compact ? statuses.slice(0, 5) : statuses;
+    return `<div class="roadmap">${list.map((status) => `<article class="roadmap-item"><span class="state-label">${status[0]}</span><p>${status[1]}</p></article>`).join("")}</div>`;
   }
 
   function roadmapPage() {
     return pageShell(`
       <main class="section">
         <div class="section-inner">
-          ${sectionHeading("Roadmap", "Fases de implementacion", "La ruta mantiene el MVP enfocado y separa mejoras futuras como pagos reales, facturacion, WhatsApp, multiempresa y app movil.")}
+          ${sectionHeading("Estado del producto", "Qué existe y qué sigue después", "El núcleo comercial está implementado. La prioridad siguiente es hacerlo operable en un piloto antes de sumar integraciones de mayor riesgo.")}
           ${roadmapList(false)}
         </div>
       </main>

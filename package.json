@@ -1,13 +1,14 @@
 {
   "name": "saleops-showcase",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Public static showcase for SaleOps with simulated ecommerce, admin, reports, and AI insight flows.",
+  "description": "Public static showcase for the real SaleOps commerce and operations platform.",
   "type": "module",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs"
   },
   "keywords": [
     "saleops",

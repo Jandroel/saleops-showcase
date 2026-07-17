@@ -1,104 +1,22 @@
-# Mock Data
+# Datos de la demo estática
 
-## Objetivo
+La sección `/demo/` utiliza datos simulados para ser navegable sin backend ni servicios externos. Estos datos no representan la persistencia ni los contratos de la aplicación real.
 
-El showcase usa datos simulados para demostrar la experiencia de SaleOps sin backend real ni base de datos.
+## Fuente
 
-Archivo principal:
+`public/assets/mock-data.js` contiene categorías, productos, pedidos, métricas, series de ventas y escenarios opcionales de IA. `public/assets/app.js` renderiza las vistas y gestiona la interacción local.
 
-```text
-public/assets/mock-data.js
-```
+## Persistencia
 
-## Estructura
+Sólo se conservan en el navegador:
 
-### Categories
+- `saleops-showcase-cart`
+- `saleops-showcase-last-order`
 
-Lista categorias visibles para catalogo y filtros:
+No se envía información a servidores. El checkout no procesa pagos ni solicita datos de tarjeta.
 
-- Laptops.
-- Perifericos.
-- Audio.
-- Monitores.
-- Conectividad.
-- Home office.
-- Productividad.
-- Gamer sobrio.
+## Diferencia con el producto
 
-### Products
+La aplicación real obtiene catálogo, pedidos, inventario, ventas, caja y reportes desde PostgreSQL a través de la API. Sus permisos y reglas se validan en servidor. Las capturas de la portada sí provienen de esa aplicación conectada.
 
-Cada producto mock incluye:
-
-- `slug`;
-- `name`;
-- `category`;
-- `price`;
-- `previousPrice`;
-- `stock`;
-- `status`;
-- `accent`;
-- `description`;
-- `specs`.
-
-Estados usados:
-
-- `available`: disponible.
-- `low`: bajo stock.
-- `out`: agotado.
-
-### Orders
-
-Pedidos recientes simulados con:
-
-- codigo;
-- cliente;
-- total;
-- estado;
-- metodo de entrega;
-- metodo de pago;
-- tiempo relativo.
-
-Estados tecnicos:
-
-- `Pending`.
-- `Confirmed`.
-- `Preparing`.
-- `ReadyForPickup`.
-- `Completed`.
-
-### Metrics
-
-Metricas del dashboard:
-
-- ventas del mes;
-- pedidos pendientes;
-- productos con bajo stock;
-- ticket promedio.
-
-### Sales Series
-
-Serie semanal usada para el grafico mock de ventas.
-
-### AI Insights
-
-Respuestas simuladas de IA interna. No se llama a ningun proveedor real.
-
-## Persistencia local
-
-El carrito y el ultimo pedido simulado usan `localStorage`:
-
-- `saleops-showcase-cart`;
-- `saleops-showcase-last-order`.
-
-Estos datos no salen del navegador.
-
-## Recommended Improvements
-
-- Agregar mas productos si la demo necesita mayor densidad visual.
-- Separar datos por archivo JSON si el showcase migra a un framework.
-- Agregar fixtures especificos para pruebas E2E futuras.
-
-## Open Questions
-
-- Se mantendra NovaTech Store como tienda demo final?
-- Se agregaran datos mock por campana comercial o temporada?
+Los escenarios de IA son texto demostrativo aislado. No existe proveedor, entrenamiento, inferencia ni dependencia funcional de IA.

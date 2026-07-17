@@ -1,168 +1,42 @@
-# Architecture
+# Arquitectura
 
-## Objetivo
+## Repositorios
 
-Este documento define la arquitectura general propuesta para SaleOps en Fase 0. No implementa codigo, pero orienta la separacion de repositorios, modulos, responsabilidades y decisiones tecnicas.
+SaleOps se divide en cuatro repositorios con responsabilidades explícitas:
 
-## Arquitectura de tres repositorios
+| Repositorio | Responsabilidad | Ejecución |
+| --- | --- | --- |
+| `saleops-showcase` | Vitrina pública, capturas y demo simulada | Sitio estático |
+| `saleops-frontend` | Storefront, cuenta y panel operativo | Next.js |
+| `saleops-backend` | API, reglas de negocio y persistencia | NestJS + PostgreSQL |
+| `saleops-docs` | Arquitectura, producto y operación | Markdown |
 
-SaleOps se organizara en tres repositorios:
+## Aplicación web
 
-- `saleops-showcase`: publico, orientado a presentacion, demo visual y documentacion publica.
-- `saleops-frontend`: privado, contiene tienda real y panel administrativo.
-- `saleops-backend`: privado, contiene API, base de datos, autenticacion, roles, logica de negocio, reportes e IA interna.
+Un único proyecto Next.js separa tienda pública, cuenta de cliente y panel interno mediante grupos de rutas y layouts. TanStack Query administra estado remoto, React Hook Form y Zod validan formularios, y Playwright cubre recorridos de navegador.
 
-## Por que separar el showcase publico
+La tienda prioriza claridad de compra y adaptación móvil. El panel usa navegación y controles densos para trabajo repetido. Los permisos visibles mejoran la experiencia, pero no sustituyen la autorización del servidor.
 
-El showcase debe poder publicarse como portafolio sin exponer logica sensible, secretos, estructuras internas o endpoints reales. Sirve para contar el producto, mostrar experiencia visual y simular flujos.
+## API
 
-Separarlo evita que la demo publica arrastre riesgos de seguridad del sistema real y permite adaptar el discurso del proyecto sin afectar la implementacion privada.
+NestJS funciona como monolito modular. Los dominios comparten un despliegue y una base PostgreSQL, mientras conservan controladores, servicios, DTOs y reglas de autorización propios.
 
-## Por que frontend y backend reales seran privados
+Prisma modela persistencia y migraciones. Las operaciones que afectan stock, pedidos, ventas, cancelaciones o caja usan transacciones y bloqueos cuando existe riesgo de concurrencia.
 
-El frontend y backend reales contienen decisiones de negocio, integraciones, configuracion de seguridad, contratos API y potencialmente adaptaciones para clientes. Mantenerlos privados reduce exposicion de superficie sensible y permite trabajar con datos e infraestructura reales de forma mas controlada.
+## Seguridad
 
-## Arquitectura frontend propuesta
+- Personal y clientes tienen autenticación y refresh tokens separados.
+- RBAC protege catálogo interno, inventario, ventas, caja, reportes y configuración.
+- Los endpoints públicos omiten costos, auditoría y datos privados.
+- El correo se procesa mediante outbox después de confirmar la operación principal.
+- Swagger se deshabilita en producción.
 
-Stack:
+## IA y servicios externos
 
-- Next.js estable con App Router;
-- React;
-- TypeScript;
-- Tailwind CSS;
-- shadcn/ui;
-- TanStack Query;
-- React Hook Form;
-- Zod;
-- Recharts;
-- Playwright.
+La IA no forma parte del camino crítico. El frontend contiene un laboratorio opcional con escenarios locales aislados; el backend no expone endpoints de IA ni llama a proveedores. Los reportes operativos son consultas deterministas sobre datos reales.
 
-La aplicacion frontend debe separar dos areas:
+La media admite almacenamiento local y una configuración opcional de Cloudinary. El correo admite previews locales y un transporte configurable. Los pagos actuales son manuales o referencias externas y no reciben datos de tarjeta.
 
-- tienda publica: home, catalogo, producto, carrito, checkout, cuenta de cliente y consulta de pedido;
-- panel admin: dashboard, productos, inventario, pedidos, clientes, ventas, reportes, IA y configuracion.
+## Límites
 
-La separacion puede hacerse por grupos de rutas. La tienda prioriza rendimiento, SEO basico y conversion. El panel prioriza densidad informativa, estados claros y eficiencia operativa.
-
-## Arquitectura backend propuesta
-
-Stack:
-
-- NestJS;
-- TypeScript;
-- PostgreSQL;
-- Prisma;
-- JWT con refresh tokens;
-- RBAC;
-- Swagger/OpenAPI;
-- Docker;
-- Jest;
-- validacion de DTOs;
-- logging;
-- rate limiting basico.
-
-El backend iniciara como API modular monolitica. Cada modulo tendra controladores, servicios, DTOs, validaciones y reglas de autorizacion propias, pero compartira una misma base de datos y despliegue.
-
-Modulos esperados:
-
-- Auth;
-- Users;
-- Customers;
-- Products;
-- Categories;
-- Brands;
-- Inventory;
-- Cart;
-- Orders;
-- Payments;
-- Delivery;
-- Sales;
-- Reports;
-- AI Insights;
-- Store Settings;
-- Audit Logs;
-- Notifications.
-
-## API modular monolitica
-
-Una API modular monolitica permite avanzar rapido sin perder estructura. Para el MVP, microservicios agregarian complejidad innecesaria en autenticacion, observabilidad, despliegues y consistencia de datos.
-
-La modularidad interna debe dejar limites claros para que, si el producto crece, algunos dominios puedan separarse mas adelante.
-
-## Base de datos
-
-PostgreSQL sera la base de datos principal. Es adecuada para datos relacionales como productos, pedidos, inventario, pagos, clientes y auditoria.
-
-Prisma puede usarse como ORM para modelar entidades, migraciones y consultas con TypeScript. Las decisiones de modelo se documentan primero de forma conceptual antes de escribir schema real.
-
-## Autenticacion y autorizacion
-
-La autenticacion interna usara credenciales seguras, password hashing y JWT con refresh tokens. La autorizacion usara RBAC con roles Admin y Vendedor en el MVP.
-
-Clientes registrados tendran autenticacion separada del panel interno. Cliente invitado no tendra cuenta, pero sus pedidos deben consultarse con un mecanismo de verificacion.
-
-## Separacion entre tienda publica y panel admin
-
-La tienda publica consume endpoints seguros para catalogo, carrito, checkout y pedidos propios. El panel admin consume endpoints protegidos por rol.
-
-No debe existir acceso de clientes al modulo de IA interna, reportes internos, auditoria ni configuracion del negocio.
-
-## Diseno futuro para pagos reales
-
-Aunque el MVP usa pagos manuales o simulados, Payment debe modelarse con una abstraccion de proveedor. La API no debe depender de un proveedor especifico como Stripe, Mercado Pago, Culqi o PayPal.
-
-La abstraccion debe permitir:
-
-- crear intento de pago;
-- confirmar o validar pago;
-- recibir estado;
-- registrar referencia externa;
-- conciliar pago con Order o Sale.
-
-## Diseno futuro para delivery avanzado
-
-El MVP solo incluye recojo y delivery local basico. DeliveryMethod debe permitir evolucionar hacia zonas, tarifas, repartidores, ventanas horarias o integraciones externas sin redisenar Order.
-
-No se implementa tracking en vivo ni gestion de repartidores en tiempo real en el MVP.
-
-## Diseno de IA interna
-
-La IA sera un modulo interno que consulta datos agregados y genera insights para Admin y, de forma limitada, Vendedor.
-
-Debe basarse en datos reales del sistema:
-
-- ventas por periodo;
-- productos mas vendidos;
-- productos con bajo stock;
-- productos con poca rotacion;
-- pedidos online;
-- recomendaciones de reposicion.
-
-Se deben controlar permisos, costos, rate limits y registro de consultas relevantes.
-
-## Escalabilidad sin sobredisenar
-
-SaleOps debe ser escalable de forma razonable:
-
-- indices para consultas frecuentes;
-- paginacion en listados;
-- separacion clara de modulos;
-- jobs futuros para tareas pesadas;
-- backups;
-- logs y metricas basicas;
-- contratos API documentados.
-
-No se debe introducir multitenancy, microservicios o colas complejas hasta que el flujo principal este validado.
-
-## Recommended Improvements
-
-- Generar OpenAPI desde el backend y usarlo como contrato con frontend.
-- Mantener una capa de servicios por dominio para centralizar reglas de negocio.
-- Definir convenciones de errores API desde Fase 3.
-- Usar feature flags simples para activar modulos futuros sin romper MVP.
-
-## Open Questions
-
-- Se usara un solo proyecto frontend para tienda y admin o dos apps dentro de un monorepo privado?
-- El backend se desplegara inicialmente en un VPS, PaaS o contenedores administrados?
-- La IA usara un proveedor externo desde el inicio o primero respuestas simuladas basadas en reportes?
+El sistema es single-tenant: una tienda por despliegue. No implementa microservicios, marketplace, multiempresa, pagos reales, promociones, OAuth, facturación electrónica ni tracking en vivo.

@@ -1,80 +1,35 @@
-# Deployment Showcase
+# Despliegue del showcase
 
-## Objetivo
+El showcase es un sitio estático. No requiere backend, base de datos, secretos ni variables de entorno.
 
-SaleOps Showcase puede desplegarse como sitio estatico. No necesita backend, base de datos, variables de entorno sensibles ni servicios externos.
-
-## Build
-
-Ejecutar:
+## Build verificable
 
 ```bash
-node scripts/build.mjs
+npm ci
+npm run build
+npm run check
+npm audit --audit-level=high
 ```
 
-Salida:
+La salida está en `out/`. El build genera un `index.html` por ruta para evitar depender de redirects del proveedor.
 
-```text
-out/
-```
+## Plataformas
 
-## Vercel
+En Vercel, Cloudflare Pages o Netlify usa:
 
-Configuracion sugerida:
+- Build command: `npm run build`
+- Output directory: `out`
+- Root directory: raíz del repositorio
 
-- Framework preset: Other.
-- Build command: `node scripts/build.mjs`.
-- Output directory: `out`.
-- Install command: vacio o `npm install` si el entorno lo exige.
+GitHub Pages también puede publicar `out/`. Si se utiliza un subpath, deben ajustarse los paths absolutos `/assets/...` o configurarse un dominio raíz.
 
-No se requieren variables de entorno.
+## Verificación previa
 
-## Cloudflare Pages
+1. Ejecutar `npm run build` y `npm run check`.
+2. Revisar la portada en escritorio y móvil.
+3. Confirmar que las capturas corresponden a la aplicación real y no muestran secretos.
+4. Recorrer tienda, carrito, checkout y panel de la demo estática.
+5. Comprobar los cuatro enlaces de repositorio.
+6. Confirmar que cada capacidad está rotulada como real, opcional, simulada o futura.
 
-Configuracion sugerida:
-
-- Build command: `node scripts/build.mjs`.
-- Build output directory: `out`.
-- Root directory: raiz del repositorio.
-
-No se requiere Functions ni Workers para esta fase.
-
-## Netlify
-
-Configuracion sugerida:
-
-- Build command: `node scripts/build.mjs`.
-- Publish directory: `out`.
-
-No se necesitan redirects para las rutas generadas por el build, porque el script crea `index.html` por ruta.
-
-## GitHub Pages
-
-Opcion recomendada:
-
-1. Ejecutar build local o en GitHub Actions.
-2. Publicar el contenido de `out/`.
-
-Nota: si el sitio se publica bajo subpath, puede requerir ajustar paths absolutos `/assets/...` o configurar Pages en dominio raiz del proyecto.
-
-## Verificacion antes de deploy
-
-- Correr servidor local.
-- Revisar landing.
-- Revisar `/demo/store/products/`.
-- Agregar producto al carrito.
-- Completar checkout simulado.
-- Revisar `/demo/admin/`.
-- Ejecutar build.
-- Confirmar que no existan prompts locales trackeados.
-
-## Recommended Improvements
-
-- Agregar GitHub Actions para construir y publicar `out/`.
-- Agregar capturas de Playwright en una fase de calidad.
-- Definir dominio o subdominio publico para portafolio.
-
-## Open Questions
-
-- Cual sera la plataforma de despliegue inicial?
-- El showcase se publicara en dominio propio o subdominio del proveedor?
+El workflow de CI repite build, comprobación estática y auditoría de dependencias en cada push y pull request.

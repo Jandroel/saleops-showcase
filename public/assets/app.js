@@ -165,7 +165,7 @@
           </div>
         </div>
       </footer>
-      <div class="toast" data-toast></div>
+      <div class="toast" data-toast role="status" aria-live="polite" aria-atomic="true"></div>
     `;
   }
 
@@ -534,10 +534,12 @@
             <div class="option-grid" data-payment-options>
               ${option("payment", "pickup", "Pago al recoger", "Validacion manual por Vendedor.")}
               ${option("payment", "cod", "Pago contra entrega", "Se confirma al entregar.")}
-              ${option("payment", "yape", "Yape/Plin manual", "Referencia manual simulada.")}
+              ${option("payment", "yape", "Yape manual", "Importe y referencia sujetos a validacion.")}
+              ${option("payment", "plin", "Plin manual", "Importe y referencia sujetos a validacion.")}
               ${option("payment", "transfer", "Transferencia bancaria", "Sin integracion bancaria real.")}
               ${option("payment", "card", "Tarjeta simulada", "Solo para demo visual.")}
             </div>
+            <div class="disclaimer" style="margin-top:16px;"><strong>Demostracion: no realizar pagos reales.</strong> Yape, Plin y transferencia se muestran con datos ficticios y validacion manual. La tarjeta simulada no solicita ni almacena datos bancarios.</div>
             <button class="btn primary" style="width:100%; margin-top: 18px;" type="submit">${icon("check")} Confirmar pedido de ejemplo</button>
           </form>
           <aside class="checkout-panel">
@@ -762,12 +764,21 @@
     updateCartCounters();
   }
 
-  function showToast(message) {
+  function showToast(message, actionHref) {
     const toast = document.querySelector("[data-toast]");
     if (!toast) return;
-    toast.textContent = message;
+    toast.replaceChildren();
+    const text = document.createElement("span");
+    text.textContent = message;
+    toast.append(text);
+    if (actionHref) {
+      const action = document.createElement("a");
+      action.href = actionHref;
+      action.textContent = "Ver carrito";
+      toast.append(action);
+    }
     toast.classList.add("show");
-    window.setTimeout(() => toast.classList.remove("show"), 1900);
+    window.setTimeout(() => toast.classList.remove("show"), 5000);
   }
 
   function updateCartCounters() {
@@ -785,7 +796,8 @@
     else items.push({ slug, qty: 1 });
     saveCart(items);
     updateCartCounters();
-    showToast(`${product.name} agregado al carrito`);
+    const quantity = items.find((item) => item.slug === slug).qty;
+    showToast(`${product.name} · ${quantity} ${quantity === 1 ? "unidad" : "unidades"}`, "/demo/store/cart/");
   }
 
   function changeQty(slug, dir) {
